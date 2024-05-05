@@ -1,12 +1,15 @@
-// import useFetch from "../services/useFetch";
+import PropTypes from "prop-types";
 
-
-const Header = () => {
-
-  // const { data } = useFetch(user);
+const Header = ({ name }) => {
   return (
-    <div>Bonjour <span>Lamine</span></div>
-  )
-}
+    <h1 className="text-5xl">
+      Bonjour <span className="text-[#FF0101]">{name}</span>
+    </h1>
+  );
+};
 
-export default Header
+Header.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default Header;

@@ -1,19 +1,45 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (id) => {
-  const [data, setData] = useState(null);
+function useFetch(userId) {
+  const [userData, setUserData] = useState();
+  const [userPerformance, setUserPerformance] = useState();
+  const [userAverageSessions, setUserAverageSessions] = useState();
+  const [userActivity, setUserActivity] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/user/${id}`);
-      const jsonData = await response.json();
-      setData(jsonData);
+      const [
+        userDataResponse,
+        userPerformanceResponse,
+        userAverageSessionsResponse,
+        userActivityResponse,
+      ] = await Promise.all([
+        fetch(`http://localhost:3000/user/${userId}`),
+        fetch(`http://localhost:3000/user/${userId}/performance`),
+        fetch(`http://localhost:3000/user/${userId}/average-sessions`),
+        fetch(`http://localhost:3000/user/${userId}/activity`),
+      ]);
+
+      const userDataJson = await userDataResponse.json();
+      const userPerformanceJson = await userPerformanceResponse.json();
+      const userAverageSessionsJson = await userAverageSessionsResponse.json();
+      const userActivityJson = await userActivityResponse.json();
+
+      setUserData(userDataJson.data);
+      setUserPerformance(userPerformanceJson);
+      setUserAverageSessions(userAverageSessionsJson);
+      setUserActivity(userActivityJson);
     };
 
     fetchData();
-  }, [id]);
+  }, [userId]);
 
-  return { data };
-};
+  return {
+    userData,
+    userPerformance,
+    userAverageSessions,
+    userActivity,
+  };
+}
 
 export default useFetch;
