@@ -26,9 +26,9 @@ function useFetch(userId) {
       const userActivityJson = await userActivityResponse.json();
 
       setUserData(userDataJson.data);
-      setUserPerformance(userPerformanceJson);
-      setUserAverageSessions(userAverageSessionsJson);
-      setUserActivity(userActivityJson);
+      setUserPerformance(userPerformanceJson.data);
+      setUserAverageSessions(userAverageSessionsJson.data);
+      setUserActivity(userActivityJson.data);
     };
 
     fetchData();

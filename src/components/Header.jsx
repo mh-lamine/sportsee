@@ -2,9 +2,14 @@ import PropTypes from "prop-types";
 
 const Header = ({ name }) => {
   return (
-    <h1 className="text-5xl">
-      Bonjour <span className="text-[#FF0101]">{name}</span>
-    </h1>
+    <header>
+      <h1 className="text-5xl mb-10">
+        Bonjour <span className="text-[#FF0101]">{name}</span>
+      </h1>
+      <p className="text-lg">
+        Félicitation ! Vous avez explosé vos objectifs hier 👏
+      </p>
+    </header>
   );
 };
 
