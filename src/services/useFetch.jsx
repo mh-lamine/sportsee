@@ -43,3 +43,7 @@ function useFetch(userId) {
 }
 
 export default useFetch;
+
+/*
+- faire un service qui va appeler ce service ou les donnees mock pour récupérer les données et qui va les formatter pour les composants
+*/

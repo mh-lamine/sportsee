@@ -1,32 +1,26 @@
 import Header from "../components/Header";
-import { useParams } from "react-router-dom";
-import useFetch from "../services/useFetch";
+import useData from "../services/useData";
 import Activity from "../components/Activity";
 import AverageSessions from "../components/AverageSessions";
 import Performance from "../components/Performance";
 import TodayScore from "../components/TodayScore";
 
-const Profile = () => {
-  const { id } = useParams();
+const Profile = async () => {
   const { userData, userPerformance, userAverageSessions, userActivity } =
-    useFetch(id);
+    await useData();
 
   return (
     <div className="px-20 py-10 w-full flex flex-col">
-      {userData && <Header name={userData.userInfos.firstName} />}
+      <Header name={userData} />
       <div className="grid grid-cols-[3fr_1fr] gap-4 mt-auto">
         <div>
-          <div>{userActivity && <Activity data={userActivity.sessions} />}</div>
+          <div>
+            <Activity data={userActivity} />
+          </div>
           <div className="flex items-center gap-4">
-            {userAverageSessions && (
-              <AverageSessions data={userAverageSessions.sessions} />
-            )}
-            {userPerformance && (
-              <Performance data={userPerformance} />
-            )}
-            {userData && (
-              <TodayScore data={userData.sessions} />
-            )}
+            <AverageSessions data={userAverageSessions} />
+            <Performance data={userPerformance} />
+            <TodayScore data={userData} />
           </div>
         </div>
         <div>count cards</div>

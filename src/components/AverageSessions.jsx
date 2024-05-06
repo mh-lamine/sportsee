@@ -38,13 +38,7 @@ const AverageSessions = ({ data }) => {
           fillOpacity={0.5}
         />
         <YAxis dataKey="sessionLength" hide={true}  />
-        <Tooltip wrapperStyle={{
-          backgroundColor: "#fff",
-          color: "#000",
-          borderRadius: "10px",
-          border: "none",
-        
-        }} />
+        <Tooltip content={<div>coucou</div>} />
         <Line
           type="natural"
           dataKey="sessionLength"
