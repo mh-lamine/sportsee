@@ -5,7 +5,7 @@ import NavbarY from "./components/NavbarY";
 
 function App() {
   return (
-    <div className="h-screen">
+    <div className="h-screen flex flex-col">
       <NavbarX />
       <div className="flex h-full">
         <NavbarY />
