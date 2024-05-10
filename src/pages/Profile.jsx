@@ -1,18 +1,18 @@
 import Header from "../components/Header";
 import useData from "../services/useData";
-import Activity from "../components/Activity";
-import AverageSessions from "../components/AverageSessions";
-import Performance from "../components/Performance";
-import TodayScore from "../components/TodayScore";
+// import Activity from "../components/Activity";
+// import AverageSessions from "../components/AverageSessions";
+// import Performance from "../components/Performance";
+// import TodayScore from "../components/TodayScore";
 
-const Profile = async () => {
+const Profile = () => {
   const { userData, userPerformance, userAverageSessions, userActivity } =
-    await useData();
-
+     useData();
+  console.log(userData, userPerformance, userAverageSessions, userActivity);
   return (
     <div className="px-20 py-10 w-full flex flex-col">
       <Header name={userData} />
-      <div className="grid grid-cols-[3fr_1fr] gap-4 mt-auto">
+      {/* <div className="grid grid-cols-[3fr_1fr] gap-4 mt-auto">
         <div>
           <div>
             <Activity data={userActivity} />
@@ -24,7 +24,7 @@ const Profile = async () => {
           </div>
         </div>
         <div>count cards</div>
-      </div>
+      </div> */}
     </div>
   );
 };
