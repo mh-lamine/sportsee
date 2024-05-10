@@ -1,39 +1,41 @@
-const useFetch = async (id) => {
-  try {
-    const [
-      userDataResponse,
-      userAverageSessionsResponse,
-      userActivityResponse,
-      userPerformanceResponse,
-    ] = await Promise.all([
-      fetch(`http://localhost:3000/user/${id}`),
-      fetch(`http://localhost:3000/user/${id}/average-sessions`),
-      fetch(`http://localhost:3000/user/${id}/activity`),
-      fetch(`http://localhost:3000/user/${id}/performance`),
-    ]);
+import { useState, useEffect } from "react";
 
-    const [
-      userDataJson,
-      userAverageSessionsJson,
-      userActivityJson,
-      userPerformanceJson,
-    ] = await Promise.all([
-      userDataResponse.json(),
-      userAverageSessionsResponse.json(),
-      userActivityResponse.json(),
-      userPerformanceResponse.json(),
-    ]);
+function useFetch(userId) {
+  const [userData, setUserData] = useState();
+  const [userPerformance, setUserPerformance] = useState();
+  const [userAverageSessions, setUserAverageSessions] = useState();
+  const [userActivity, setUserActivity] = useState();
 
-    return {
-      userDataJson,
-      userAverageSessionsJson,
-      userActivityJson,
-      userPerformanceJson,
+  useEffect(() => {
+    const fetchData = async () => {
+      const [
+        userDataResponse,
+        userPerformanceResponse,
+        userAverageSessionsResponse,
+        userActivityResponse,
+      ] = await Promise.all([
+        fetch(`http://localhost:3000/user/${userId}`),
+        fetch(`http://localhost:3000/user/${userId}/performance`),
+        fetch(`http://localhost:3000/user/${userId}/average-sessions`),
+        fetch(`http://localhost:3000/user/${userId}/activity`),
+      ]);
+      const userDataJson = await userDataResponse.json();
+      const userPerformanceJson = await userPerformanceResponse.json();
+      const userAverageSessionsJson = await userAverageSessionsResponse.json();
+      const userActivityJson = await userActivityResponse.json();
+      setUserData(userDataJson.data);
+      setUserPerformance(userPerformanceJson.data);
+      setUserAverageSessions(userAverageSessionsJson.data);
+      setUserActivity(userActivityJson.data);
     };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  }
-};
+    fetchData();
+  }, [userId]);
+  return {
+    userData,
+    userPerformance,
+    userAverageSessions,
+    userActivity,
+  };
+}
 
 export default useFetch;
