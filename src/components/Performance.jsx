@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
+import "./graph.css";
+
 
 const Performance = ({ data }) => {
-  const normalizedData = data.data.map((item) => {
+  const normalizedData = data.map((item) => {
     let subject;
     switch (item.kind) {
       case 1:

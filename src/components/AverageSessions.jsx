@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
-import {Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import "./graph.css";
+
 
 const AverageSessions = ({ data }) => {
   const formatDay = (dayNumber) => {
@@ -37,7 +39,7 @@ const AverageSessions = ({ data }) => {
           tick={{ fill: "white" }}
           fillOpacity={0.5}
         />
-        <YAxis dataKey="sessionLength" hide={true}  />
+        <YAxis dataKey="sessionLength" hide={true} />
         <Tooltip content={<div>coucou</div>} />
         <Line
           type="natural"

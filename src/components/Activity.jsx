@@ -10,25 +10,45 @@ import {
 import PropTypes from "prop-types";
 
 const Activity = ({ data }) => {
-  const normalizedData = data.map((item) => ({
-    day: item.day.split("-")[2],
-    kg: item.kilogram,
-    kCal: item.calories,
-  }));
-
   const minValue = Math.round(
-    Math.min(...data.map((item) => item.kilogram - 1))
+    Math.min(...data.map((item) => item.kilogram - 5))
   );
 
   const maxValue = Math.round(
-    Math.max(...data.map((item) => item.kilogram + 1))
+    Math.max(...data.map((item) => item.kilogram + 5))
   );
 
+  const minValueCalories = Math.round(
+    Math.min(...data.map((item) => item.calories - 5))
+  );
+
+  const maxValueCalories = Math.round(
+    Math.max(...data.map((item) => item.calories + 5))
+  );
+
+  const normalizedData = data.map((item) => ({
+    day: item.day.split("-")[2],
+    kg: item.kilogram,
+    kCal:
+    (( item.calories - minValueCalories) /
+      (maxValueCalories - minValueCalories)) *
+      (maxValue - minValue) +
+    minValue,
+  }));
+
   const legendPayload = [
-    { value: "Poids (kg)", type: "circle", color: "#E60000" },
-    { value: "Calories brûlées (kCal)", type: "circle", color: "#282D30" },
+    { value: "Poids (kg)", type: "circle", color: "#282D30" },
+    {
+      value: "Calories brûlées (kCal)",
+      type: "circle",
+      color: "#E60000",
+    },
   ];
 
+  // const tooltipContent = (e) =>{
+  //   // console.log(e.payload ? e.payload[1].payload.day: 'no');
+  //   return <div>coucou</div>
+  // }
   return (
     <div>
       <h2 className="">Activité quotidienne</h2>
@@ -41,11 +61,8 @@ const Activity = ({ data }) => {
           domain={[minValue, maxValue]}
           allowDecimals={false}
         />
-        <Tooltip />
+        <Tooltip  />
         <Legend
-          wrapperStyle={{
-            top: -100,
-          }}
           align="right"
           verticalAlign="top"
           iconType="circle"
@@ -54,14 +71,14 @@ const Activity = ({ data }) => {
         <Bar
           barSize={10}
           dataKey="kg"
-          fill="#E60000"
+          fill="#282D30"
           radius={[100, 100, 0, 0]}
           strokeWidth={5}
         />
         <Bar
           barSize={10}
           dataKey="kCal"
-          fill="#282D30"
+          fill="#E60000"
           radius={[100, 100, 0, 0]}
         />
       </BarChart>
