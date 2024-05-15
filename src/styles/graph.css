@@ -1,0 +1,16 @@
+.recharts-polar-grid {
+  transform: scale(0.7);
+}
+tspan {
+  fill: #fff;
+}
+.recharts-polar-angle-axis {
+  transform: scale(0.7);
+}
+.recharts-radar-polygon {
+  transform: scale(0.7);
+}
+.recharts-polar-grid-angle {
+  display: none;
+}
+

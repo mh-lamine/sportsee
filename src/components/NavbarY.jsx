@@ -6,7 +6,7 @@ import icon4 from "../assets/icon4.png";
 const NavbarY = () => {
   return (
     <div className="bg-[#020203] text-white flex flex-col items-center p-4">
-      <div className="space-y-3 mt-60">
+      <div className="space-y-3 mt-40">
         <img src={icon1} />
         <img src={icon2} />
         <img src={icon3} />

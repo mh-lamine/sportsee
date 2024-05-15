@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
-import "./graph.css";
+import "../styles/graph.css";
 
 
 const AverageSessions = ({ data }) => {
@@ -30,7 +30,7 @@ const AverageSessions = ({ data }) => {
 
   return (
     <div className="bg-[#fF0000]">
-      <LineChart width={250} height={250} data={normalizedData}>
+      <LineChart width={180} height={180} data={normalizedData}>
         <XAxis
           dataKey="day"
           axisLine={false}

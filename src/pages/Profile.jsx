@@ -1,6 +1,5 @@
 import Header from "../components/Header";
-import useFetch from "../services/useFetch";
-// import useData from "../services/useFormatData"
+import { useState, useEffect } from "react";
 import Activity from "../components/Activity";
 import AverageSessions from "../components/AverageSessions";
 import Performance from "../components/Performance";
@@ -11,22 +10,54 @@ import caloriesIcon from "../assets/calories-icon.png";
 import proteinIcon from "../assets/protein-icon.png";
 import carbsIcon from "../assets/carbs-icon.png";
 import fatIcon from "../assets/fat-icon.png";
+import formatData from "../service/formatData";
 
 const Profile = () => {
   const { id } = useParams();
-  const {
-    loading,
-    error,
-    userData,
-    userPerformance,
-    userAverageSessions,
-    userActivity,
-  } = useFetch(id);
+
+  const [userData, setUserData] = useState();
+  const [userPerformance, setUserPerformance] = useState();
+  const [userAverageSessions, setUserAverageSessions] = useState();
+  const [userActivity, setUserActivity] = useState();
+
+  const [loading, setLoading] = useState();
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      try {
+        const [
+          userDataResponse,
+          userPerformanceResponse,
+          userAverageSessionsResponse,
+          userActivityResponse,
+        ] = await Promise.all([
+          formatData(id),
+          formatData(id, "performance"),
+          formatData(id, "average-sessions"),
+          formatData(id, "activity"),
+        ]);
+
+        setUserData(userDataResponse.data);
+        setUserPerformance(userPerformanceResponse.data);
+        setUserAverageSessions(userAverageSessionsResponse.data);
+        setUserActivity(userActivityResponse.data);
+
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+    getData();
+  }, [id]);
 
   return (
-    <div className="px-20 py-10 w-full flex flex-col">
+    <div className="px-16 py-10 w-full flex flex-col">
       {loading && <div>Chargement...</div>}
       {error && <div>Une erreur est survenue : {error}</div>}
+
       {userData && (
         <>
           <Header name={userData.userInfos.firstName} />
@@ -39,7 +70,9 @@ const Profile = () => {
                 <AverageSessions data={userAverageSessions.sessions} />
 
                 <Performance data={userPerformance.data} />
-                <TodayScore data={userData} />
+                <TodayScore
+                  score={userData.score ? userData.score : userData.todayScore}
+                />
               </div>
             </div>
 

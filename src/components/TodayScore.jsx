@@ -1,30 +1,40 @@
-import "./graph.css";
-import { PieChart, Pie } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
+import PropTypes from "prop-types";
+import "../styles/graph.css";
 
-const TodayScore = ({ userData }) => {
+const TodayScore = ({ score }) => {
+  const pieScore = score * 100;
+  const remaining = 100 - pieScore;
 
-  console.log(userData)
+  const data = [
+    { name: "score", value: pieScore },
+    { name: "remaining", value: remaining },
+  ];
 
-  // const pieScore = score * 100;
-  // const remaining = 100 - pieScore;
-
-  // const data = [
-  //   { name: "score", value: pieScore },
-  //   { name: "remaining", value: remaining },
-  // ];
+  const COLORS = ["#FF0000", "#FBFBFB"];
 
   return (
-    <PieChart width={250} height={250}>
-      <Pie
-        // data={data}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#8884d8"
-        paddingAngle={5}
-        dataKey="value"
-      ></Pie>
-    </PieChart>
+    <div className="bg-[#FBFBFB]">
+      <PieChart width={180} height={180}>
+        <Pie
+          data={data}
+          innerRadius={70}
+          outerRadius={83}
+          startAngle={90}
+          endAngle={450}
+          dataKey="value"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </div>
   );
+};
+
+TodayScore.propTypes = {
+  score: PropTypes.number.isRequired,
 };
 
 export default TodayScore;

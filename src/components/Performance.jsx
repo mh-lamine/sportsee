@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
-import "./graph.css";
-
+import "../styles/graph.css";
 
 const Performance = ({ data }) => {
   const normalizedData = data.map((item) => {
@@ -35,16 +34,17 @@ const Performance = ({ data }) => {
   });
 
   return (
-    <div className="bg-[#282D30]">
+    <div className="rounded-md bg-[#282d30] text-xs">
       <RadarChart
-        outerRadius={90}
-        width={250}
-        height={250}
+        cx={130}
+        cy={130}
+        width={180}
+        height={180}
         data={normalizedData}
       >
-        <PolarGrid  />
+        <PolarGrid />
         <PolarAngleAxis dataKey="subject" />
-        <Radar dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+        <Radar dataKey="A" fill="#FF0101" fillOpacity={0.6} />
       </RadarChart>
     </div>
   );
