@@ -8,6 +8,7 @@ import {
   Legend,
 } from "recharts";
 import PropTypes from "prop-types";
+import '../styles/graph.css'
 
 const Activity = ({ data }) => {
   const minValue = Math.round(
@@ -50,8 +51,8 @@ const Activity = ({ data }) => {
   //   return <div>coucou</div>
   // }
   return (
-    <div>
-      <h2>Activité quotidienne</h2>
+    <div className="bg-[#FBFBFB]">
+      <h2 className="p-4">Activité quotidienne</h2>
       <BarChart width={600} height={300} data={normalizedData} barGap={10}>
         <CartesianGrid strokeDasharray="3" vertical={false} />
         <XAxis dataKey="day" />
@@ -61,7 +62,7 @@ const Activity = ({ data }) => {
           domain={[minValue, maxValue]}
           allowDecimals={false}
         />
-        <Tooltip  />
+        <Tooltip />
         <Legend
           align="right"
           verticalAlign="top"

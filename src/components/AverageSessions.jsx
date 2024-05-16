@@ -29,7 +29,8 @@ const AverageSessions = ({ data }) => {
   }));
 
   return (
-    <div className="bg-[#fF0000]">
+    <div className="bg-[#fF0000] relative">
+      <h2 className="text-white opacity-50 absolute p-4 ">Durée moyenne des sessions</h2>
       <LineChart width={180} height={180} data={normalizedData}>
         <XAxis
           dataKey="day"

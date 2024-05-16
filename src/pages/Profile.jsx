@@ -62,11 +62,11 @@ const Profile = () => {
         <>
           <Header name={userData.userInfos.firstName} />
           <div className="grid grid-cols-[3fr_1fr] gap-4 mt-auto">
-            <div>
+            <div className="space-y-10">
               <div>
                 <Activity data={userActivity.sessions} />
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-between gap-4">
                 <AverageSessions data={userAverageSessions.sessions} />
 
                 <Performance data={userPerformance.data} />
