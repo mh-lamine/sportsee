@@ -8,7 +8,7 @@ import {
   Legend,
 } from "recharts";
 import PropTypes from "prop-types";
-import '../styles/graph.css'
+import "../styles/graph.css";
 
 const Activity = ({ data }) => {
   const minValue = Math.round(
@@ -31,10 +31,10 @@ const Activity = ({ data }) => {
     day: item.day.split("-")[2],
     kg: item.kilogram,
     kCal:
-    (( item.calories - minValueCalories) /
-      (maxValueCalories - minValueCalories)) *
-      (maxValue - minValue) +
-    minValue,
+      ((item.calories - minValueCalories) /
+        (maxValueCalories - minValueCalories)) *
+        (maxValue - minValue) +
+      minValue,
   }));
 
   const legendPayload = [
@@ -46,10 +46,6 @@ const Activity = ({ data }) => {
     },
   ];
 
-  // const tooltipContent = (e) =>{
-  //   // console.log(e.payload ? e.payload[1].payload.day: 'no');
-  //   return <div>coucou</div>
-  // }
   return (
     <div className="bg-[#FBFBFB]">
       <h2 className="p-4">Activité quotidienne</h2>
@@ -62,7 +58,7 @@ const Activity = ({ data }) => {
           domain={[minValue, maxValue]}
           allowDecimals={false}
         />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip data={data} />} />
         <Legend
           align="right"
           verticalAlign="top"
@@ -92,3 +88,21 @@ Activity.propTypes = {
 };
 
 export default Activity;
+
+const CustomTooltip = ({ active, payload, data }) => {
+  if (active && payload && payload.length) {
+    const day = payload[1].payload.day - 1;
+    const kcal = data[day].calories;
+    return (
+      <div className="bg-[#FF0000] p-4 shadow-md">
+        <p className="text-white">{`${payload[0].value} kg`}</p>
+        <p className="text-white">{`${kcal} kCal`}</p>
+      </div>
+    );
+  }
+  CustomTooltip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.array,
+    data: PropTypes.array,
+  };
+};
