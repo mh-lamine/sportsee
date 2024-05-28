@@ -39,10 +39,10 @@ const Profile = () => {
           formatData(id, "activity"),
         ]);
 
-        setUserData(userDataResponse.data);
+        setUserData(userDataResponse);
         setUserPerformance(userPerformanceResponse.data);
         setUserAverageSessions(userAverageSessionsResponse.data);
-        setUserActivity(userActivityResponse.data);
+        setUserActivity(userActivityResponse);
 
         setLoading(false);
       } catch (error) {
@@ -60,41 +60,39 @@ const Profile = () => {
 
       {userData && (
         <>
-          <Header name={userData.userInfos.firstName} />
+          <Header name={userData.name} />
           <div className="grid grid-cols-[3fr_1fr] gap-4 mt-auto">
             <div className="space-y-10">
               <div>
-                <Activity data={userActivity.sessions} />
+                <Activity data={userActivity} />
               </div>
               <div className="flex items-center justify-between gap-4">
                 <AverageSessions data={userAverageSessions.sessions} />
 
                 <Performance data={userPerformance.data} />
-                <TodayScore
-                  score={userData.score ? userData.score : userData.todayScore}
-                />
+                <TodayScore score={userData.score} pieData={userData.pieData} />
               </div>
             </div>
 
             <div className="flex flex-col justify-between">
               <CountCard
                 title="Calories"
-                count={userData.keyData.calorieCount}
+                count={userData.calorieCount}
                 icon={caloriesIcon}
               />
               <CountCard
                 title="Proteines"
-                count={userData.keyData.proteinCount}
+                count={userData.proteinCount}
                 icon={proteinIcon}
               />
               <CountCard
                 title="Glucides"
-                count={userData.keyData.carbohydrateCount}
+                count={userData.carbohydrateCount}
                 icon={carbsIcon}
               />
               <CountCard
                 title="Lipides"
-                count={userData.keyData.lipidCount}
+                count={userData.lipidCount}
                 icon={fatIcon}
               />
             </div>

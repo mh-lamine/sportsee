@@ -3,6 +3,7 @@ import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 import "../styles/graph.css";
 
 const Performance = ({ data }) => {
+
   const normalizedData = data.map((item) => {
     let subject;
     switch (item.kind) {

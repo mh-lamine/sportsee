@@ -6,18 +6,7 @@ import {
 import PropTypes from "prop-types";
 import "../styles/graph.css";
 
-const TodayScore = ({ score }) => {
-  const data = [
-    {
-      name: "set",
-      value: 100,
-    },
-    {
-      name: "score",
-      value: score * 100,
-      fill: "#ff0000",
-    },
-  ];
+const TodayScore = ({ pieData, score }) => {
 
   return (
     <div className="bg-[#FBFBFB] relative">
@@ -27,7 +16,7 @@ const TodayScore = ({ score }) => {
       <span className="z-10 absolute top-0 left-0 p-4">Score</span>
       <PieChart width={180} height={180}>
         <Pie
-          data={data}
+          data={pieData}
           cx="50%"
           cy="50%"
           innerRadius={45}
@@ -45,7 +34,14 @@ const TodayScore = ({ score }) => {
 };
 
 TodayScore.propTypes = {
-  score: PropTypes.number.isRequired,
+  pieData: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.number,
+      fill: PropTypes.string,
+    })
+  ),
+  score: PropTypes.number,
 };
 
 export default TodayScore;

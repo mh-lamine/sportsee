@@ -11,59 +11,25 @@ import PropTypes from "prop-types";
 import "../styles/graph.css";
 
 const Activity = ({ data }) => {
-  const minValue = Math.round(
-    Math.min(...data.map((item) => item.kilogram - 5))
-  );
-
-  const maxValue = Math.round(
-    Math.max(...data.map((item) => item.kilogram + 5))
-  );
-
-  const minValueCalories = Math.round(
-    Math.min(...data.map((item) => item.calories - 5))
-  );
-
-  const maxValueCalories = Math.round(
-    Math.max(...data.map((item) => item.calories + 5))
-  );
-
-  const normalizedData = data.map((item) => ({
-    day: item.day.split("-")[2],
-    kg: item.kilogram,
-    kCal:
-      ((item.calories - minValueCalories) /
-        (maxValueCalories - minValueCalories)) *
-        (maxValue - minValue) +
-      minValue,
-  }));
-
-  const legendPayload = [
-    { value: "Poids (kg)", type: "circle", color: "#282D30" },
-    {
-      value: "Calories brûlées (kCal)",
-      type: "circle",
-      color: "#E60000",
-    },
-  ];
 
   return (
     <div className="bg-[#FBFBFB]">
       <h2 className="p-4">Activité quotidienne</h2>
-      <BarChart width={600} height={300} data={normalizedData} barGap={10}>
+      <BarChart width={600} height={300} data={data.barData} barGap={10}>
         <CartesianGrid strokeDasharray="3" vertical={false} />
         <XAxis dataKey="day" />
         <YAxis
           dataKey="kg"
           orientation="right"
-          domain={[minValue, maxValue]}
+          domain={[data.minValue, data.maxValue]}
           allowDecimals={false}
         />
-        <Tooltip content={<CustomTooltip data={data} />} />
+        <Tooltip content={<CustomTooltip data={data.rawData} />} />
         <Legend
           align="right"
           verticalAlign="top"
           iconType="circle"
-          payload={legendPayload}
+          payload={data.legendPayload}
         />
         <Bar
           barSize={10}
