@@ -33,8 +33,6 @@ const Profile = () => {
     getData();
   }, [id]);
 
-  console.log(userData)
-
   return (
     <div className="px-16 py-10 w-full flex flex-col">
       {loading && <div>Chargement...</div>}

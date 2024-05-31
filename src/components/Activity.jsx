@@ -24,7 +24,7 @@ const Activity = ({ data }) => {
           domain={[data.minValue, data.maxValue]}
           allowDecimals={false}
         />
-        <Tooltip content={<CustomTooltip data={data.rawData} />} />
+        <Tooltip content={<CustomTooltip data={data.data} />} />
         <Legend
           align="right"
           verticalAlign="top"
