@@ -1,5 +1,5 @@
 import fetchData from "./fetchData";
-const useMockedData = true;
+const useMockedData = false;
 
 const formatData = async (id) => {
   const mockedData = {
@@ -17,13 +17,13 @@ const formatData = async (id) => {
     },
     userActivity: {
       barData: [
-        { day: "01", kg: 65, kCal: 68.75 },
-        { day: "02", kg: 66, kCal: 72.5 },
-        { day: "03", kg: 67, kCal: 75.625 },
-        { day: "04", kg: 66, kCal: 70 },
-        { day: "05", kg: 66, kCal: 71.875 },
-        { day: "06", kg: 65, kCal: 73.125 },
-        { day: "07", kg: 64, kCal: 78.125 },
+        { day: "01", kg: 65, kCal: 68.75, name: "L" },
+        { day: "02", kg: 66, kCal: 72.5, name: "M" },
+        { day: "03", kg: 67, kCal: 75.625, name: "M" },
+        { day: "04", kg: 66, kCal: 70, name: "J" },
+        { day: "05", kg: 66, kCal: 71.875, name: "V" },
+        { day: "06", kg: 65, kCal: 73.125, name: "S" },
+        { day: "07", kg: 64, kCal: 78.125, name: "D" },
       ],
       data: [
         { day: "2024-05-01", kilogram: 65, calories: 200 },
@@ -97,15 +97,44 @@ const formatData = async (id) => {
     Math.max(...data.map((item) => item.calories + 5))
   );
 
-  const barData = data.map((item) => ({
-    day: item.day.split("-")[2],
-    kg: item.kilogram,
-    kCal:
-      ((item.calories - minValueCalories) /
-        (maxValueCalories - minValueCalories)) *
-        (maxValue - minValue) +
-      minValue,
-  }));
+  const barData = data.map((item) => {
+    let name;
+    switch (item.day.split("-")[2]) {
+      case "01":
+        name = "L";
+        break;
+      case "02":
+        name = "M";
+        break;
+      case "03":
+        name = "M";
+        break;
+      case "04":
+        name = "J";
+        break;
+      case "05":
+        name = "V";
+        break;
+      case "06":
+        name = "S";
+        break;
+      case "07":
+        name = "D";
+        break;
+      default:
+        name = "unknown";
+    }
+    return {
+      name,
+      day: item.day.split("-")[2],
+      kg: item.kilogram,
+      kCal:
+        ((item.calories - minValueCalories) /
+          (maxValueCalories - minValueCalories)) *
+          (maxValue - minValue) +
+        minValue,
+    };
+  });
 
   const legendPayload = [
     { value: "Poids (kg)", type: "circle", color: "#282D30" },

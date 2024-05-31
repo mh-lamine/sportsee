@@ -3,6 +3,7 @@ import { Line, LineChart, Rectangle, Tooltip, XAxis, YAxis } from "recharts";
 import "../styles/graph.css";
 
 const AverageSessions = ({ data }) => {
+  console.log(data)
 
   return (
     <div className="bg-[#fF0000] relative">
@@ -12,12 +13,12 @@ const AverageSessions = ({ data }) => {
       <LineChart width={180} height={180} data={data}>
         <XAxis
           dataKey="day"
+          tick={{ fill: "white" }}
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "white" }}
           fillOpacity={0.5}
         />
-        <YAxis dataKey="sessionLength" hide={true} />
+        <YAxis hide={true} />
         <Tooltip content={<CustomTooltip />} cursor={<CustomCursor />} />
         <Line
           type="natural"

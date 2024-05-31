@@ -6,15 +6,9 @@ const Performance = ({ data }) => {
 
   return (
     <div className="rounded-md bg-[#282d30] text-xs">
-      <RadarChart
-        cx={130}
-        cy={130}
-        width={180}
-        height={180}
-        data={data}
-      >
+      <RadarChart cx={130} cy={130} width={180} height={180} data={data}>
         <PolarGrid />
-        <PolarAngleAxis dataKey="subject" />
+        <PolarAngleAxis dataKey="subject" tick={{ fill: "white" }} />
         <Radar dataKey="A" fill="#FF0101" fillOpacity={0.6} />
       </RadarChart>
     </div>

@@ -17,7 +17,7 @@ const Activity = ({ data }) => {
       <h2 className="p-4">Activité quotidienne</h2>
       <BarChart width={600} height={300} data={data.barData} barGap={10}>
         <CartesianGrid strokeDasharray="3" vertical={false} />
-        <XAxis dataKey="day" />
+        <XAxis dataKey="name" />
         <YAxis
           dataKey="kg"
           orientation="right"
