@@ -1,8 +1,64 @@
 import fetchData from "./fetchData";
-const useMockedData = false;
+const useMockedData = true;
 
 const formatData = async (id) => {
-  const mockedData = {};
+  const mockedData = {
+    userData: {
+      pieData: [
+        { name: "set", value: 100 },
+        { name: "score", value: 45, fill: "#ff0000" },
+      ],
+      score: 0.45,
+      name: "Alice",
+      calorieCount: 2500,
+      carbohydrateCount: 320,
+      lipidCount: 70,
+      proteinCount: 180,
+    },
+    userActivity: {
+      barData: [
+        { day: "01", kg: 65, kCal: 68.75 },
+        { day: "02", kg: 66, kCal: 72.5 },
+        { day: "03", kg: 67, kCal: 75.625 },
+        { day: "04", kg: 66, kCal: 70 },
+        { day: "05", kg: 66, kCal: 71.875 },
+        { day: "06", kg: 65, kCal: 73.125 },
+        { day: "07", kg: 64, kCal: 78.125 },
+      ],
+      data: [
+        { day: "2024-05-01", kilogram: 65, calories: 200 },
+        { day: "2024-05-02", kilogram: 66, calories: 220 },
+        { day: "2024-05-03", kilogram: 67, calories: 240 },
+        { day: "2024-05-04", kilogram: 66, calories: 210 },
+        { day: "2024-05-05", kilogram: 66, calories: 215 },
+        { day: "2024-05-06", kilogram: 65, calories: 225 },
+        { day: "2024-05-07", kilogram: 64, calories: 250 },
+      ],
+      legendPayload: [
+        { value: "Poids (kg)", type: "circle", color: "#282D30" },
+        { value: "Calories brûlées (kCal)", type: "circle", color: "#E60000" },
+      ],
+      maxValue: 79,
+      minValue: 67,
+    },
+    userAverageSessions: [
+      { day: "L", sessionLength: 3.5 },
+      { day: "M", sessionLength: 2.0 },
+      { day: "M", sessionLength: 4.0 },
+      { day: "J", sessionLength: 4.5 },
+      { day: "V", sessionLength: 0.5 },
+      { day: "S", sessionLength: 1.0 },
+      { day: "D", sessionLength: 5.5 },
+    ],
+    userPerformance: [
+      { subject: "cardio", A: 90 },
+      { subject: "energy", A: 110 },
+      { subject: "endurance", A: 130 },
+      { subject: "strength", A: 70 },
+      { subject: "speed", A: 150 },
+      { subject: "intensity", A: 95 },
+    ],
+  };
 
   if (useMockedData) {
     return mockedData;

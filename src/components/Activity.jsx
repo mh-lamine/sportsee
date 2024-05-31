@@ -50,7 +50,7 @@ const Activity = ({ data }) => {
 };
 
 Activity.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export default Activity;
