@@ -53,6 +53,7 @@ const Profile = () => {
     getData();
   }, [id]);
 
+
   return (
     <div className="px-16 py-10 w-full flex flex-col">
       {loading && <div>Chargement...</div>}
@@ -69,7 +70,7 @@ const Profile = () => {
               <div className="flex items-center justify-between gap-4">
                 <AverageSessions data={userAverageSessions.sessions} />
 
-                <Performance data={userPerformance.data} />
+                <Performance data={userPerformance} />
                 <TodayScore score={userData.score} pieData={userData.pieData} />
               </div>
             </div>

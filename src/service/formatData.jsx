@@ -77,22 +77,41 @@ const formatData = async (id, path) => {
       rawData: data,
     };
   }
-  // if (path === "performance") {
-  //   const data = rawData.data;
-  //   const normalizedData = [];
-  //   console.log(normalizedData);
-  //   for (const [key, value] of Object.entries(data.kind)) {
-  //     normalizedData.push({
-  //       subject: key,
-  //       A: value,
-  //     });
-  //   }
-  //   const formattedData = Object.values(normalizedData);
-  //   console.log(formattedData);
-  //   return {
-  //     formattedData,
-  //   };
-  // } 
+  if (path === "performance") {
+    const data = rawData.data;
+    const normalizedData = data.data.map((item) => {
+      let subject;
+      switch (item.kind) {
+        case 1:
+          subject = "cardio";
+          break;
+        case 2:
+          subject = "energy";
+          break;
+        case 3:
+          subject = "endurance";
+          break;
+        case 4:
+          subject = "strength";
+          break;
+        case 5:
+          subject = "speed";
+          break;
+        case 6:
+          subject = "intensity";
+          break;
+        default:
+          subject = "unknown";
+      }
+      return {
+        subject,
+        A: item.value,
+      };
+    });
+    return {
+      data: normalizedData,
+    };
+  } 
   else {
     const formattedData = rawData;
 
@@ -101,3 +120,9 @@ const formatData = async (id, path) => {
 };
 
 export default formatData;
+
+/*
+- appeler le service dans un useEffect qui renvoie un objet unique avec les sous objets
+- service renvoie soit les donnees mockees soit appelle chaque route d'un coup et recupere les datas d'un composant et chaque data est formatée pour le composant
+- service renvoie un objet
+*/
