@@ -14,12 +14,7 @@ import formatData from "../service/formatData";
 
 const Profile = () => {
   const { id } = useParams();
-
   const [userData, setUserData] = useState();
-  const [userPerformance, setUserPerformance] = useState();
-  const [userAverageSessions, setUserAverageSessions] = useState();
-  const [userActivity, setUserActivity] = useState();
-
   const [loading, setLoading] = useState();
   const [error, setError] = useState();
 
@@ -27,23 +22,8 @@ const Profile = () => {
     const getData = async () => {
       setLoading(true);
       try {
-        const [
-          userDataResponse,
-          userPerformanceResponse,
-          userAverageSessionsResponse,
-          userActivityResponse,
-        ] = await Promise.all([
-          formatData(id),
-          formatData(id, "performance"),
-          formatData(id, "average-sessions"),
-          formatData(id, "activity"),
-        ]);
-
-        setUserData(userDataResponse);
-        setUserPerformance(userPerformanceResponse.data);
-        setUserAverageSessions(userAverageSessionsResponse.data);
-        setUserActivity(userActivityResponse);
-
+        const response = await formatData(id);
+        setUserData(response);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -53,6 +33,7 @@ const Profile = () => {
     getData();
   }, [id]);
 
+  console.log(userData)
 
   return (
     <div className="px-16 py-10 w-full flex flex-col">
@@ -61,39 +42,39 @@ const Profile = () => {
 
       {userData && (
         <>
-          <Header name={userData.name} />
+          <Header name={userData.userData.name} />
           <div className="grid grid-cols-[3fr_1fr] gap-4 mt-auto">
             <div className="space-y-10">
               <div>
-                <Activity data={userActivity} />
+                <Activity data={userData.userActivity} />
               </div>
               <div className="flex items-center justify-between gap-4">
-                <AverageSessions data={userAverageSessions.sessions} />
+                <AverageSessions data={userData.userAverageSessions} />
 
-                <Performance data={userPerformance} />
-                <TodayScore score={userData.score} pieData={userData.pieData} />
+                <Performance data={userData.userPerformance} />
+                <TodayScore score={userData.userData.score} pieData={userData.userData.pieData} />
               </div>
             </div>
 
             <div className="flex flex-col justify-between">
               <CountCard
                 title="Calories"
-                count={userData.calorieCount}
+                count={userData.userData.calorieCount}
                 icon={caloriesIcon}
               />
               <CountCard
                 title="Proteines"
-                count={userData.proteinCount}
+                count={userData.userData.proteinCount}
                 icon={proteinIcon}
               />
               <CountCard
                 title="Glucides"
-                count={userData.carbohydrateCount}
+                count={userData.userData.carbohydrateCount}
                 icon={carbsIcon}
               />
               <CountCard
                 title="Lipides"
-                count={userData.lipidCount}
+                count={userData.userData.lipidCount}
                 icon={fatIcon}
               />
             </div>

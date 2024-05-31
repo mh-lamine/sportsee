@@ -1,122 +1,139 @@
 import fetchData from "./fetchData";
 const useMockedData = false;
 
-const formatData = async (id, path) => {
+const formatData = async (id) => {
   const mockedData = {};
 
   if (useMockedData) {
     return mockedData;
   }
 
-  const rawData = await fetchData(id, path);
-  if (!path) {
-    const score = rawData.data.score || rawData.data.todayScore;
-    const pieData = [
-      {
-        name: "set",
-        value: 100,
-      },
-      {
-        name: "score",
-        value: score * 100,
-        fill: "#ff0000",
-      },
-    ];
+  const { userData, userActivity, userAverageSessions, userPerformance } =
+    await fetchData(id);
+
+  const score = userData.data.score || userData.data.todayScore;
+  const pieData = [
+    {
+      name: "set",
+      value: 100,
+    },
+    {
+      name: "score",
+      value: score * 100,
+      fill: "#ff0000",
+    },
+  ];
+
+  const data = userActivity.data.sessions;
+  const minValue = Math.round(
+    Math.min(...data.map((item) => item.kilogram - 5))
+  );
+
+  const maxValue = Math.round(
+    Math.max(...data.map((item) => item.kilogram + 5))
+  );
+
+  const minValueCalories = Math.round(
+    Math.min(...data.map((item) => item.calories - 5))
+  );
+
+  const maxValueCalories = Math.round(
+    Math.max(...data.map((item) => item.calories + 5))
+  );
+
+  const barData = data.map((item) => ({
+    day: item.day.split("-")[2],
+    kg: item.kilogram,
+    kCal:
+      ((item.calories - minValueCalories) /
+        (maxValueCalories - minValueCalories)) *
+        (maxValue - minValue) +
+      minValue,
+  }));
+
+  const legendPayload = [
+    { value: "Poids (kg)", type: "circle", color: "#282D30" },
+    {
+      value: "Calories brûlées (kCal)",
+      type: "circle",
+      color: "#E60000",
+    },
+  ];
+
+  const performance = userPerformance.data.data.map((item) => {
+    let subject;
+    switch (item.kind) {
+      case 1:
+        subject = "cardio";
+        break;
+      case 2:
+        subject = "energy";
+        break;
+      case 3:
+        subject = "endurance";
+        break;
+      case 4:
+        subject = "strength";
+        break;
+      case 5:
+        subject = "speed";
+        break;
+      case 6:
+        subject = "intensity";
+        break;
+      default:
+        subject = "unknown";
+    }
     return {
+      subject,
+      A: item.value,
+    };
+  });
+
+  const formatDay = (dayNumber) => {
+    switch (dayNumber) {
+      case 1:
+        return "L";
+      case 2:
+        return "M";
+      case 3:
+        return "M";
+      case 4:
+        return "J";
+      case 5:
+        return "V";
+      case 6:
+        return "S";
+      case 7:
+        return "D";
+    }
+  };
+
+  const sessions = userAverageSessions.data.sessions.map((item) => ({
+    day: formatDay(item.day),
+    sessionLength: item.sessionLength / 10,
+  }));
+
+  return {
+    userData: {
       pieData,
       score,
-      name: rawData.data.userInfos.firstName,
-      calorieCount: rawData.data.keyData.calorieCount,
-      carbohydrateCount: rawData.data.keyData.carbohydrateCount,
-      lipidCount: rawData.data.keyData.lipidCount,
-      proteinCount: rawData.data.keyData.proteinCount,
-    };
-  }
-  if (path === "activity") {
-    const data = rawData.data.sessions;
-    const minValue = Math.round(
-      Math.min(...data.map((item) => item.kilogram - 5))
-    );
-
-    const maxValue = Math.round(
-      Math.max(...data.map((item) => item.kilogram + 5))
-    );
-
-    const minValueCalories = Math.round(
-      Math.min(...data.map((item) => item.calories - 5))
-    );
-
-    const maxValueCalories = Math.round(
-      Math.max(...data.map((item) => item.calories + 5))
-    );
-
-    const barData = data.map((item) => ({
-      day: item.day.split("-")[2],
-      kg: item.kilogram,
-      kCal:
-        ((item.calories - minValueCalories) /
-          (maxValueCalories - minValueCalories)) *
-          (maxValue - minValue) +
-        minValue,
-    }));
-
-    const legendPayload = [
-      { value: "Poids (kg)", type: "circle", color: "#282D30" },
-      {
-        value: "Calories brûlées (kCal)",
-        type: "circle",
-        color: "#E60000",
-      },
-    ];
-
-    return {
+      name: userData.data.userInfos.firstName,
+      calorieCount: userData.data.keyData.calorieCount,
+      carbohydrateCount: userData.data.keyData.carbohydrateCount,
+      lipidCount: userData.data.keyData.lipidCount,
+      proteinCount: userData.data.keyData.proteinCount,
+    },
+    userActivity: {
       barData,
       legendPayload,
       minValue,
       maxValue,
-      rawData: data,
-    };
-  }
-  if (path === "performance") {
-    const data = rawData.data;
-    const normalizedData = data.data.map((item) => {
-      let subject;
-      switch (item.kind) {
-        case 1:
-          subject = "cardio";
-          break;
-        case 2:
-          subject = "energy";
-          break;
-        case 3:
-          subject = "endurance";
-          break;
-        case 4:
-          subject = "strength";
-          break;
-        case 5:
-          subject = "speed";
-          break;
-        case 6:
-          subject = "intensity";
-          break;
-        default:
-          subject = "unknown";
-      }
-      return {
-        subject,
-        A: item.value,
-      };
-    });
-    return {
-      data: normalizedData,
-    };
-  } 
-  else {
-    const formattedData = rawData;
-
-    return formattedData;
-  }
+      data,
+    },
+    userPerformance: performance,
+    userAverageSessions: sessions,
+  };
 };
 
 export default formatData;

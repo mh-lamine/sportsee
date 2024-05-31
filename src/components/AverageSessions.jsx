@@ -3,36 +3,13 @@ import { Line, LineChart, Rectangle, Tooltip, XAxis, YAxis } from "recharts";
 import "../styles/graph.css";
 
 const AverageSessions = ({ data }) => {
-  const formatDay = (dayNumber) => {
-    switch (dayNumber) {
-      case 1:
-        return "L";
-      case 2:
-        return "M";
-      case 3:
-        return "M";
-      case 4:
-        return "J";
-      case 5:
-        return "V";
-      case 6:
-        return "S";
-      case 7:
-        return "D";
-    }
-  };
-
-  const normalizedData = data.map((item) => ({
-    day: formatDay(item.day),
-    sessionLength: item.sessionLength/10,
-  }));
 
   return (
     <div className="bg-[#fF0000] relative">
       <h2 className="text-white opacity-50 absolute p-2 z-10">
         Durée moyenne des sessions
       </h2>
-      <LineChart width={180} height={180} data={normalizedData}>
+      <LineChart width={180} height={180} data={data}>
         <XAxis
           dataKey="day"
           axisLine={false}
