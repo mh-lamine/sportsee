@@ -3,7 +3,6 @@ import { Line, LineChart, Rectangle, Tooltip, XAxis, YAxis } from "recharts";
 import "../styles/graph.css";
 
 const AverageSessions = ({ data }) => {
-  console.log(data)
 
   return (
     <div className="bg-[#fF0000] relative">
