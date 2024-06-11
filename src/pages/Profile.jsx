@@ -26,7 +26,7 @@ const Profile = () => {
         setUserData(response);
         setLoading(false);
       } catch (error) {
-        setError(error);
+        setError(error.message);
         setLoading(false);
       }
     };
@@ -36,7 +36,7 @@ const Profile = () => {
   return (
     <div className="px-16 py-10 w-full flex flex-col">
       {loading && <div>Chargement...</div>}
-      {error && <div>Une erreur est survenue : {error}</div>}
+      {error && <div>Une erreur est survenue.</div>}
 
       {userData && (
         <>

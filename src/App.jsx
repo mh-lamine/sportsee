@@ -1,7 +1,8 @@
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 import "./App.css";
 import NavbarX from "./components/NavbarX";
 import NavbarY from "./components/NavbarY";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <NavbarX />
       <div className="flex h-full">
         <NavbarY />
-        <Outlet />
+        <Profile />
       </div>
     </div>
   );

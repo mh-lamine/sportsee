@@ -222,9 +222,3 @@ const formatData = async (id) => {
 };
 
 export default formatData;
-
-/*
-- appeler le service dans un useEffect qui renvoie un objet unique avec les sous objets
-- service renvoie soit les donnees mockees soit appelle chaque route d'un coup et recupere les datas d'un composant et chaque data est formatée pour le composant
-- service renvoie un objet
-*/
